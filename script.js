@@ -3,6 +3,9 @@ var W = 100,H = 50;
 var pause = true;
 var activemap1 = true;
 var iter = 0;
+var cursorPressed = false;
+var editMode = true;
+
 
 createmap1(map1);
 createmap1(map2);
@@ -17,7 +20,7 @@ function createCustomElement(elementClass, elementID,tagName){
 	aTag.id = elementID;
 	aTag.className = elementClass;
 	aTag.onclick = onClickMap;
-	//aTag.addEventListener("click",onClickMap);
+	aTag.onmousemove = onMouseMoveMap;
 	return aTag ;
 }
 
@@ -127,10 +130,17 @@ function onClickMap(objThis)
 	var x = name.substr(name.indexOf("_")+1)-1;
 
 	var _map1 = activemap1 ? map1 : map2;
-	_map1[y][x] = true;
+	_map1[y][x] = editMode;
 	renderMap();
 
 	//console.log(objThis.currentTarget.id);
+}
+
+function onMouseMoveMap(objThis)
+{
+	if (cursorPressed) {
+		onClickMap(objThis);
+	}
 }
 
 function clearMap()
@@ -143,4 +153,22 @@ function clearMap()
 		}
 	}
 	renderMap();
+}
+
+
+function mouseDown(objThis)
+{
+	cursorPressed = true;
+}
+
+function mouseUp(objThis)
+{
+	cursorPressed = false;
+}
+
+function changeMode()
+{
+	var tImg = document.getElementById("mode");
+	tImg.src = editMode ? "img/pencil.png":"img/eraser.png";
+	editMode = !editMode;
 }

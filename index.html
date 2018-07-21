@@ -4,11 +4,14 @@
 	<title>Game Of Life</title>
 	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
-<body>
-	<input type="button" id="pause" value="Pause" onclick="btmPause()">
-	<input type="button" id="restart" value="Filling" onclick="randomFilling()">
-	<input type="button" id="clear" value="Clear" onclick="clearMap()">
-	<table id="tbl" align="center"></table>
+<body onmouseup="mouseUp()">
+	<header>
+		<input type="button" id="pause" value="Pause" onclick="btmPause()">
+		<input type="button" id="restart" value="Filling" onclick="randomFilling()">
+		<input type="button" id="clear" value="Clear" onclick="clearMap()">
+		<img src="img/eraser.png" onclick="changeMode()" id="mode">
+	</header>
+	<table id="tbl" align="center" onmousedown="mouseDown()"></table>
 	<footer id="floor">text</footer>
 	<script type="text/javascript" src="script.js"></script>
 </body>

@@ -11,6 +11,8 @@ body{
 input{
 	width: 80px;
 	font-size: 15pt;
+	vertical-align: top;
+
 }
 
 table{
@@ -21,4 +23,12 @@ table{
 footer{
 	color: white;
 	font-size: 17pt;
+}
+
+img{
+	width: 30px;
+}
+
+header div{
+	display: inline;
 }
