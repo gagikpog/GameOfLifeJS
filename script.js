@@ -1,12 +1,13 @@
 var map1 =[],map2 =[];
-var W = 100,H = 50;
+var W = 150,H = 70;
 var pause = true;
 var activemap1 = true;
 var iter = 0;
 var cursorPressed = false;
 var editMode = true;
+var penSize = 1;
 
-
+document.addEventListener("keydown", keyDownFunc, false);
 createmap1(map1);
 createmap1(map2);
 initWindow();
@@ -169,6 +170,27 @@ function mouseUp(objThis)
 function changeMode()
 {
 	var tImg = document.getElementById("mode");
-	tImg.src = editMode ? "img/pencil.png":"img/eraser.png";
+	tImg.src = editMode ? "img/eraser.png":"img/pencil.png";
 	editMode = !editMode;
+}
+
+function keyDownFunc(e)
+{
+	/*key p*/
+	if (e.keyCode == 80) {
+		if (!editMode) {
+			changeMode();
+		}
+	}
+	/*key e*/
+	if (e.keyCode == 69) {
+		if (editMode) {
+			changeMode();
+		}
+	}
+}
+
+function penSizeChange()
+{
+	penSize = document.getElementById("pencilSize").value;
 }

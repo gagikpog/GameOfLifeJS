@@ -9,7 +9,8 @@
 		<input type="button" id="pause" value="Pause" onclick="btmPause()">
 		<input type="button" id="restart" value="Filling" onclick="randomFilling()">
 		<input type="button" id="clear" value="Clear" onclick="clearMap()">
-		<img src="img/eraser.png" onclick="changeMode()" id="mode">
+		<img src="img/pencil.png" onclick="changeMode()" id="mode">
+		<input type="number" id="pencilSize" value="1"  Min="1" max="10" onchange="penSizeChange()">
 	</header>
 	<table id="tbl" align="center" onmousedown="mouseDown()"></table>
 	<footer id="floor">text</footer>
