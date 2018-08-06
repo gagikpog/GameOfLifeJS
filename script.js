@@ -6,6 +6,7 @@ var iter = 0;
 var cursorPressed = false;
 var editMode = true;
 var penSize = 1;
+var cursorPos = {X:10,Y:10}
 
 document.addEventListener("keydown", keyDownFunc, false);
 createmap1(map1);
@@ -56,6 +57,15 @@ function renderMap(){
 			document.getElementById("col"+(i+1)+"_"+(j+1)).style.backgroundColor = _map1[i][j] ? "white" : "#202020";
 		}
 	}
+	for	(var i = parseInt(-(penSize-1)/2); i < 1 + parseInt((penSize)/2); i++){
+		for(var j = parseInt(-(penSize-1)/2); j < 1 + parseInt((penSize)/2); j++){
+			if(i+1+cursorPos.Y<1||i+1+cursorPos.Y>H||j+1+cursorPos.X<1||j+1+cursorPos.X>W)
+				continue;
+			var col  = document.getElementById("col"+(i+1+cursorPos.Y)+"_"+(j+1+cursorPos.X));
+			var str = "#" + col.style.backgroundColor;
+			col.style.backgroundColor = str == "#rgb(32, 32, 32)" ? "#606060": "#b0b0b0";
+		}
+	}	
 }
 
 function randomFilling(){
@@ -100,16 +110,16 @@ function nextGeneration()
 
 	activemap1 = !activemap1;
 	iter++;	
-	renderMap();
 }
 
 function timer() {
 	if(pause){
 		nextGeneration();
-		setTimeout(timer, 5);
 		var aTag = document.getElementById("floor");
 		aTag.innerText = "Generation: "+iter;
 	}
+	renderMap();
+	setTimeout(timer, 5);
 }
 
 function btmPause()
@@ -117,7 +127,7 @@ function btmPause()
 	var aTag = document.getElementById("pause");
 	aTag.value = pause ? "Play":"Pause"
 	pause = !pause
-	timer();
+	//timer();
 }
 
 function onClickMap(objThis)
@@ -131,10 +141,15 @@ function onClickMap(objThis)
 	var x = name.substr(name.indexOf("_")+1)-1;
 
 	var _map1 = activemap1 ? map1 : map2;
-	_map1[y][x] = editMode;
+//	_map1[y][x] = editMode;
+	cursorPos.X = x;
+	cursorPos.Y = y;
+	for	(var i = parseInt(-(penSize-1)/2); i < 1 + parseInt((penSize)/2); i++){
+		for(var j = parseInt(-(penSize-1)/2); j < 1 + parseInt((penSize)/2); j++){
+			_map1[i+y][j+x] = editMode;
+		}
+	}	
 	renderMap();
-
-	//console.log(objThis.currentTarget.id);
 }
 
 function onMouseMoveMap(objThis)
@@ -142,6 +157,7 @@ function onMouseMoveMap(objThis)
 	if (cursorPressed) {
 		onClickMap(objThis);
 	}
+	mMove(objThis);
 }
 
 function clearMap()
@@ -193,4 +209,16 @@ function keyDownFunc(e)
 function penSizeChange()
 {
 	penSize = document.getElementById("pencilSize").value;
+}
+
+function mMove(objThis){
+	var name = objThis.currentTarget.id;
+	if (~name.indexOf("row")) {
+		return;
+	}
+
+	var y = name.substr(3,name.indexOf("_")-3)-1;
+	var x = name.substr(name.indexOf("_")+1)-1;
+	cursorPos.X = x;
+	cursorPos.Y = y;
 }
