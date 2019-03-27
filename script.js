@@ -16,7 +16,6 @@ randomFilling();
 renderMap();
 timer();
 
-
 function createCustomElement(elementClass, elementID,tagName){
  	var aTag = document.createElement(tagName);
 	aTag.id = elementID;
@@ -171,7 +170,6 @@ function clearMap()
 	}
 	renderMap();
 }
-
 
 function mouseDown(objThis)
 {
