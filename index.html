@@ -12,7 +12,9 @@
 		<img src="img/pencil.png" onclick="changeMode()" id="mode">
 		<input type="number" id="pencilSize" value="1"  Min="1" max="10" onchange="penSizeChange()">
 	</header>
-	<table id="tbl" align="center" onmousedown="mouseDown()"></table>
+	<main>
+		<canvas id="tbl" onmousedown="mouseDown()" onmousemove="onMouseMoveMap(event)"></canvas>
+	</main>
 	<footer id="floor">text</footer>
 	<script type="text/javascript" src="script.js"></script>
 </body>
