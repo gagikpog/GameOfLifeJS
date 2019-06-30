@@ -30,8 +30,6 @@ resize();
  * @param {Event} event 
  */
 function resize(event) {
-	canvasMargin.Y = canvas.offsetTop;
-	canvasMargin.X = canvas.offsetLeft;
 	if (window.innerWidth < 850) {
 		canvas.width = window.innerWidth;
 		SIZE = parseInt(canvas.width / W);
@@ -40,6 +38,8 @@ function resize(event) {
 		canvas.width = SIZE * W;
 		canvas.height = SIZE * H;
 	}
+	canvasMargin.Y = canvas.offsetTop;
+	canvasMargin.X = canvas.offsetLeft;
 };
 /**
  * @description создает матрицу
@@ -262,3 +262,5 @@ function mMove(objThis) {
 		cursorPos.Y = parseInt((objThis.clientY - canvasMargin.Y) / SIZE);
 	}
 }
+
+//google-site-verification=I3zM5b8DVqeT4AtGY9m3M4L0Gjp6IC-lXiT_zzQvdwA
