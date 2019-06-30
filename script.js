@@ -2,6 +2,8 @@ let map1 = [], map2 = [];
 const W = 150, H = 70;
 const SIZE = 10;
 let pause = true;
+let endGame = false;
+let summ = 1;
 let activemap1 = true;
 let iter = 0;
 let cursorPressed = false;
@@ -12,6 +14,7 @@ let canvas = document.getElementById("tbl");
 let ctx = canvas.getContext("2d");
 let canvasMargin = { X: 0, Y: 0 };
 
+let tagFloor = document.getElementById("floor");
 document.addEventListener("keydown", keyDownFunc, false);
 createmap1(map1);
 createmap1(map2);
@@ -118,27 +121,39 @@ function CountNeighbors(y, x) {
 }
 /**
  * @description рассчитывает состояние следующего поколения
+ * @returns {Integer} контрольная сумма
  */
 function nextGeneration() {
 	let _map1 = activemap1 ? map1 : map2;
 	let _map2 = activemap1 ? map2 : map1;
+	let count = 0;
 	for (let i = 0; i < H; i++) {
 		for (let j = 0; j < W; j++) {
 			let n = CountNeighbors(i, j);
 			_map2[i][j] = (n == 3) || ((n == 2) && (_map1[i][j]));
+			if (_map2[i][j]) {
+				count += i * H + j * j;
+			}
 		}
 	}
 	activemap1 = !activemap1;
-	iter++;
+	if (!endGame) {
+		iter++;
+	}
+	return count;
 }
 /**
  * @description таемер
  */
 function timer() {
 	if (pause) {
-		nextGeneration();
-		let aTag = document.getElementById("floor");
-		aTag.innerText = "Generation: " + iter;
+		let s = nextGeneration();
+		if (activemap1) {
+			endGame = summ === s;			
+			summ = s;
+		}
+		
+		tagFloor.innerText = "Generation: " + iter;
 	}
 	renderMap();
 	setTimeout(timer, 5);
