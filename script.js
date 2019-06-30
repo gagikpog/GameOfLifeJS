@@ -1,6 +1,6 @@
 let map1 = [], map2 = [];
 const W = 150, H = 70;
-const SIZE = 10;
+let SIZE = 10;
 let pause = true;
 let endGame = false;
 let summ = 1;
@@ -14,11 +14,10 @@ let canvas = document.getElementById("tbl");
 let ctx = canvas.getContext("2d");
 let canvasMargin = { X: 0, Y: 0 };
 
-let tagFloor = document.getElementById("floor");
+let tagFloor = document.getElementById("generation");
 document.addEventListener("keydown", keyDownFunc, false);
 createmap1(map1);
 createmap1(map2);
-initWindow();
 randomFilling();
 renderMap();
 timer();
@@ -33,6 +32,14 @@ resize();
 function resize(event) {
 	canvasMargin.Y = canvas.offsetTop;
 	canvasMargin.X = canvas.offsetLeft;
+	if (window.innerWidth < 850) {
+		canvas.width = window.innerWidth;
+		SIZE = parseInt(canvas.width / W);
+		canvas.height = SIZE * H;
+	} else {
+		canvas.width = SIZE * W;
+		canvas.height = SIZE * H;
+	}
 };
 /**
  * @description создает матрицу
@@ -45,13 +52,6 @@ function createmap1(_map1) {
 			_map1[i][j] = false;
 		}
 	}
-}
-/**
- * @description дает размеры canvas при загрузке страници
- */
-function initWindow() {
-	canvas.width = SIZE * W;
-	canvas.height = SIZE * H;
 }
 /**
  * @description рисует точку

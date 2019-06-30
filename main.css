@@ -1,7 +1,8 @@
-*{
+* {
 	margin: 0;
 	padding: 0;
 }
+
 body {
 	background-color: #202020;
 	display: flex;
@@ -9,7 +10,12 @@ body {
 	height: 100vh;
 }
 
-main{
+header {
+	height: 40px;
+	padding: 15px;
+}
+
+main {
 	flex: 1;
 	display: flex;
 }
@@ -18,11 +24,26 @@ input {
 	width: 80px;
 	font-size: 15pt;
 	vertical-align: top;
+	margin: 6px;
 }
 
 footer {
 	color: white;
 	font-size: 17pt;
+	display: flex;
+	padding: 30px;
+}
+
+#generation {
+	flex: 1;
+}
+
+#github a{
+	text-decoration: none;
+	color: #fff;
+}
+#github a:hover{
+	color: #aaa5a5;
 }
 
 img {
