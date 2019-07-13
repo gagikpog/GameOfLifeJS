@@ -262,5 +262,3 @@ function mMove(objThis) {
 		cursorPos.Y = parseInt((objThis.clientY - canvasMargin.Y) / SIZE);
 	}
 }
-
-//google-site-verification=I3zM5b8DVqeT4AtGY9m3M4L0Gjp6IC-lXiT_zzQvdwA
