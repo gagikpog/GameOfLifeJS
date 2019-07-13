@@ -101,7 +101,7 @@ function randomFilling() {
 	}
 }
 /**
- * @description считает сколько соседних клеток активные
+ * @description считает сколько соседних клеток активны
  * @param {Integer} y 
  * @param {Integer} x 
  * @returns {Integer} возвращает количество активных клеток
@@ -166,30 +166,71 @@ function btmPause() {
 	aTag.value = pause ? "Play" : "Pause"
 	pause = !pause
 }
+
+P = {x:-1,y:-1};
+
 /**
  * @description обработчик события нажатия на canvas
  * @param {Event} objThis 
  */
 function onClickMap(objThis) {
+	
 	let y = cursorPos.Y;
 	let x = cursorPos.X;
+	P = {x,y};
+	DrawPixelInArray({x, y});	
+}
 
-	let _map1 = activemap1 ? map1 : map2;
-	for (let i = parseInt(-(penSize - 1) / 2); i < 1 + parseInt((penSize) / 2); i++) {
-		for (let j = parseInt(-(penSize - 1) / 2); j < 1 + parseInt((penSize) / 2); j++) {
-			_map1[i + y][j + x] = editMode;
+function DrawPixelInArray(p) {
+	let deltaX = Math.abs(p.x - P.x);
+    let deltaY = Math.abs(p.y - P.y);
+    let signX = P.x < p.x ? penSize : -penSize;
+    let signY = P.y < p.y ? penSize : -penSize;
+    
+    let error = deltaX - deltaY;
+	
+		let _map1 = activemap1 ? map1 : map2;
+	function draw(_p) {
+		for (let i = parseInt(-(penSize - 1) / 2); i < 1 + parseInt((penSize) / 2); i++) {
+			for (let j = parseInt(-(penSize - 1) / 2); j < 1 + parseInt((penSize) / 2); j++) {
+				_map1[i + _p.y][j + _p.x] = editMode;
+			}
 		}
 	}
+	
+	draw(p);
+    
+    while(P.x != p.x || P.y != p.y) 
+    {        
+        draw(P);
+                
+        let error2 = error * 2;
+        
+        if(error2 > -deltaY) 
+        {
+            error -= deltaY;
+            P.x += signX;
+        }
+        if(error2 < deltaX) 
+        {
+            error += deltaX;
+            P.y += signY;
+        }
+    }
+	P = p;
 	renderMap();
 }
+
 /**
  * @description обработчик события - движение мыши на  canvas
  * @param {Event} objThis
  */
 function onMouseMoveMap(objThis) {
 	mMove(objThis);
+	let y = cursorPos.Y;
+	let x = cursorPos.X;
 	if (cursorPressed) {
-		onClickMap(objThis);
+		DrawPixelInArray({x, y});
 	}
 }
 /**
@@ -211,6 +252,7 @@ function clearMap() {
  */
 function mouseDown(objThis) {
 	cursorPressed = true;
+	onClickMap();
 	onMouseMoveMap(objThis);
 }
 /**
@@ -262,5 +304,3 @@ function mMove(objThis) {
 		cursorPos.Y = parseInt((objThis.clientY - canvasMargin.Y) / SIZE);
 	}
 }
-
-//google-site-verification=I3zM5b8DVqeT4AtGY9m3M4L0Gjp6IC-lXiT_zzQvdwA
