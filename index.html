@@ -7,19 +7,19 @@
 </head>
 <body onmouseup="mouseUp()">
     <header>
-        <input type="button" id="pause" value="Pause" onclick="btmPause()">
-        <input type="button" id="restart" value="Filling" onclick="randomFilling()">
-        <input type="button" id="clear" value="Clear" onclick="clearMap()">
-        <img src="img/pencil.png" onclick="changeMode()" id="mode">
-        <input type="number" id="pencilSize" value="1"  Min="1" max="10" onchange="penSizeChange()">
+        <button class="button" onclick="btmPause(this)">Pause</button>
+        <button class="button" onclick="randomFilling()">Filling</button>
+        <button class="button" onclick="clearMap()">Clear</button>
+        <img src="img/pencil.png" onclick="view.changeMode()" id="mode">
+        <input type="number" value="1"  Min="1" max="10" onchange="view.penSizeChange(this)">
     </header>
     <main>
-        <canvas id="tbl" onmousedown="mouseDown()" onmousemove="onMouseMoveMap(event)"></canvas>
+        <canvas id="canvas" onmousedown="mouseDown()" onmousemove="onMouseMoveMap(event)"></canvas>
     </main>
-    <footer id="floor">
+    <footer>
         <span id="generation"></span>
-        <span id="github">GitHub: <a target="_blank" href="https://github.com/gagikpog/GameOfLifeJS">gagikpog</a></span>
+        <span class="github">GitHub: <a target="_blank" href="https://github.com/gagikpog/GameOfLifeJS">gagikpog</a></span>
     </footer>
-    <script type="text/javascript" src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

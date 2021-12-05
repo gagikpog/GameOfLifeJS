@@ -8,11 +8,15 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    font-size: 12px;
 }
 
 header {
-    height: 40px;
-    padding: 15px;
+    padding: 3px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #383838;
 }
 
 main {
@@ -20,40 +24,43 @@ main {
     display: flex;
 }
 
+canvas {
+    margin: auto;
+}
+
 input {
     width: 80px;
-    font-size: 15pt;
     vertical-align: top;
-    margin: 6px;
 }
 
 footer {
     color: white;
-    font-size: 17pt;
     display: flex;
-    padding: 30px;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #383838;
 }
 
 #generation {
     flex: 1;
 }
 
-#github a{
+.github a {
     text-decoration: none;
     color: #fff;
 }
-#github a:hover{
+
+.github a:hover {
     color: #aaa5a5;
 }
 
 img {
-    width: 30px;
+    width: 14px;
 }
 
 header div {
     display: inline;
-}
-
-#tbl {
-    margin: auto;
 }
