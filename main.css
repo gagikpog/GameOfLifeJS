@@ -1,59 +1,59 @@
 * {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-	background-color: #202020;
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
+    background-color: #202020;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 header {
-	height: 40px;
-	padding: 15px;
+    height: 40px;
+    padding: 15px;
 }
 
 main {
-	flex: 1;
-	display: flex;
+    flex: 1;
+    display: flex;
 }
 
 input {
-	width: 80px;
-	font-size: 15pt;
-	vertical-align: top;
-	margin: 6px;
+    width: 80px;
+    font-size: 15pt;
+    vertical-align: top;
+    margin: 6px;
 }
 
 footer {
-	color: white;
-	font-size: 17pt;
-	display: flex;
-	padding: 30px;
+    color: white;
+    font-size: 17pt;
+    display: flex;
+    padding: 30px;
 }
 
 #generation {
-	flex: 1;
+    flex: 1;
 }
 
 #github a{
-	text-decoration: none;
-	color: #fff;
+    text-decoration: none;
+    color: #fff;
 }
 #github a:hover{
-	color: #aaa5a5;
+    color: #aaa5a5;
 }
 
 img {
-	width: 30px;
+    width: 30px;
 }
 
 header div {
-	display: inline;
+    display: inline;
 }
 
 #tbl {
-	margin: auto;
+    margin: auto;
 }

@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Game Of Life</title>
-	<link rel="stylesheet" type="text/css" href="main.css">
-	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=device-height, target-densitydpi=medium-dpi">
+    <title>Game Of Life</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=device-height, target-densitydpi=medium-dpi">
 </head>
 <body onmouseup="mouseUp()">
-	<header>
-		<input type="button" id="pause" value="Pause" onclick="btmPause()">
-		<input type="button" id="restart" value="Filling" onclick="randomFilling()">
-		<input type="button" id="clear" value="Clear" onclick="clearMap()">
-		<img src="img/pencil.png" onclick="changeMode()" id="mode">
-		<input type="number" id="pencilSize" value="1"  Min="1" max="10" onchange="penSizeChange()">
-	</header>
-	<main>
-		<canvas id="tbl" onmousedown="mouseDown()" onmousemove="onMouseMoveMap(event)"></canvas>
-	</main>
-	<footer id="floor">
-		<span id="generation"></span>
-		<span id="github">GitHub: <a target="_blank" href="https://github.com/gagikpog/GameOfLifeJS">gagikpog</a></span>
-	</footer>
-	<script type="text/javascript" src="script.js"></script>
+    <header>
+        <input type="button" id="pause" value="Pause" onclick="btmPause()">
+        <input type="button" id="restart" value="Filling" onclick="randomFilling()">
+        <input type="button" id="clear" value="Clear" onclick="clearMap()">
+        <img src="img/pencil.png" onclick="changeMode()" id="mode">
+        <input type="number" id="pencilSize" value="1"  Min="1" max="10" onchange="penSizeChange()">
+    </header>
+    <main>
+        <canvas id="tbl" onmousedown="mouseDown()" onmousemove="onMouseMoveMap(event)"></canvas>
+    </main>
+    <footer id="floor">
+        <span id="generation"></span>
+        <span id="github">GitHub: <a target="_blank" href="https://github.com/gagikpog/GameOfLifeJS">gagikpog</a></span>
+    </footer>
+    <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
