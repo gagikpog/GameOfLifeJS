@@ -24,13 +24,13 @@ export class Game {
     _activeMap1 = false;
 
     /**
-     * @type { boolean[][] }
+     * @type { number[][] }
      * @private
      */
     _map1 = [];
 
     /**
-     * @type { boolean[][] }
+     * @type { number[][] }
      * @private
      */
     _map2 = [];
@@ -49,6 +49,7 @@ export class Game {
     newGame() {
         this.iteration = 0;
         this._activeMap1 = true;
+        this._endGame = false;
         randomFilling(this.getActiveMap());
     }
 
@@ -62,34 +63,42 @@ export class Game {
 
     /**
      * @description рассчитывает состояние следующего поколения
-     * @returns { number } контрольная сумма
      */
     nextGeneration() {
         let _map1 = this.getActiveMap();
         let _map2 = this.getInactiveMap();
         let count = 0;
-        for (let i = 0; i < this.h; i++) {
-            for (let j = 0; j < this.w; j++) {
-                let n = CountNeighbors(_map1, i, j);
-                _map2[i][j] = (n == 3) || ((n == 2) && (_map1[i][j]));
+        let i = 0;
+        let j = 0;
+        let n = 0;
+        for (i = 0; i < this.h; i++) {
+            for (j = 0; j < this.w; j++) {
+                n = CountNeighbors(_map1, i, j);
+                _map2[i][j] = n === 3 || (n === 2 && _map1[i][j]) ? 1 : 0;
                 if (_map2[i][j]) {
                     count += i * this.h + j * j;
                 }
             }
         }
         this._activeMap1 = !this._activeMap1;
+
+        if (this._activeMap1) {
+            this._endGame = this._oldSum === count;
+            this._oldSum = count;
+        }
+
         if (!this._endGame) {
             this.iteration++;
         }
-        return count;
     }
 
     reset() {
         this.iteration = 0;
+        this._endGame = false;
         let _map1 = this.getActiveMap();
         for (let i = 0; i < this.h; i++) {
             for (let j = 0; j < this.w; j++) {
-                _map1[i][j] = false;
+                _map1[i][j] = 0;
             }
         }
     }

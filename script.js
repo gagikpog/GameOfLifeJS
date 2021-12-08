@@ -1,33 +1,42 @@
 import { Game } from './game.js';
 import { View } from './view.js';
 
+const m = 2;
 const cfg = {
-    w: 900,
-    h: 430,
-    size: 2
+    w: 460 * m,
+    h: 215 * m,
+    size: 4 / m
 };
-let summ = 1;
+let start = null;
+let fps = 0;
+let renderCount = 0;
 
 const view = new View(new Game(cfg));
 view._game?.newGame();
 window.view = view;
-timer();
+step(Date.now());
 
 /**
  * @description таймер
  */
 function timer() {
     if (view._pause && view._game) {
-        let s = view._game.nextGeneration();
-        if (view._game._activeMap1) {
-            if (summ === s) {
-                view._game.endGame();
-            }
-            summ = s;
-        }
-
-        view._tagGeneration.innerText = "Generation: " + view._game.iteration;
+        view._game.nextGeneration();
+        view._tagGeneration.innerText = `Generation: ${view._game.iteration}; fps: ${fps}`;
     }
     view.renderMap();
-    setTimeout(timer, 5);
+}
+
+function step(timestamp) {
+    const progress = timestamp - start;
+    renderCount++;
+    if (progress >= 1000) {
+        fps = renderCount;
+        start = timestamp;
+        renderCount = 0;
+    }
+
+
+    timer();
+    setTimeout(() => step(Date.now()), 1);
 }

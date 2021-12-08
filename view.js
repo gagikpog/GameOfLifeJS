@@ -79,8 +79,8 @@ export class View {
     mMove(event) {
         if (event) {
             const size = this._game?.size || 5;
-            this._cursorPos.X = Math.round((event.clientX - this._canvasMargin.X) / size);
-            this._cursorPos.Y = Math.round((event.clientY - this._canvasMargin.Y) / size);
+            this._cursorPos.X = Math.floor((event.clientX - this._canvasMargin.X) / size);
+            this._cursorPos.Y = Math.floor((event.clientY - this._canvasMargin.Y) / size);
         }
     }
 
@@ -105,8 +105,8 @@ export class View {
                 }
             }
             //рисуем курсор рисования 
-            for (i = Math.round(-(this._penSize - 1) / 2); i < 1 + Math.round((this._penSize) / 2); i++) {
-                for (j = Math.round(-(this._penSize - 1) / 2); j < 1 + Math.round((this._penSize) / 2); j++) {
+            for (i = Math.floor(-(this._penSize - 1) / 2); i < 1 + Math.floor((this._penSize) / 2); i++) {
+                for (j = Math.floor(-(this._penSize - 1) / 2); j < 1 + Math.floor((this._penSize) / 2); j++) {
                     if (i + 1 + this._cursorPos.Y < 1 || i + 1 + this._cursorPos.Y > h || j + 1 + this._cursorPos.X < 1 || j + 1 + this._cursorPos.X > w)
                         continue;
                     drawPixel(this._ctx, j + this._cursorPos.X, i + this._cursorPos.Y, _map1[i + this._cursorPos.Y][j + this._cursorPos.X] ? '#fff' : '#555', size);
@@ -127,10 +127,10 @@ export class View {
         if (this._game) {
             let y = this._cursorPos.Y;
             let x = this._cursorPos.X;
-    
+
             let _map1 = this._game.getActiveMap();
-            for (let i = Math.round(-(this._penSize - 1) / 2); i < 1 + Math.round((this._penSize) / 2); i++) {
-                for (let j = Math.round(-(this._penSize - 1) / 2); j < 1 + Math.round((this._penSize) / 2); j++) {
+            for (let i = Math.floor(-(this._penSize - 1) / 2); i < 1 + Math.floor((this._penSize) / 2); i++) {
+                for (let j = Math.floor(-(this._penSize - 1) / 2); j < 1 + Math.floor((this._penSize) / 2); j++) {
                     _map1[i + y][j + x] = this._editMode;
                 }
             }
@@ -186,7 +186,7 @@ export class View {
         if (this._canvas && this._game) {
             if (window.innerWidth < 850) {
                 this._canvas.width = window.innerWidth;
-                this._game.size = Math.round(this._canvas.width / this._game.w);
+                this._game.size = Math.floor(this._canvas.width / this._game.w);
                 this._canvas.height = this._game.size * this._game.h;
             } else {
                 this._canvas.width = this._game.size * this._game.w;
