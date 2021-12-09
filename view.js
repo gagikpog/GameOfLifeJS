@@ -17,7 +17,7 @@ export class View {
         this._cursorPos = { X: 10, Y: 10 };
         this._canvasMargin = { X: 0, Y: 0 };
         this._canvas = document.querySelector('canvas#canvas');
-        this._ctx = this._canvas && this._canvas.getContext('2d');
+        this._ctx = this._canvas && this._canvas.getContext('2d', { alpha: false });
         this._pause = true;
 
         document.addEventListener('keydown', this.keyDownFunc, false);
@@ -89,29 +89,52 @@ export class View {
      */
     renderMap() {
         if (this._ctx && this._game && this._canvas) {
-            //ссылка на активную матрицу
+
+            // ссылка на активную матрицу
             let _map1 = this._game.getActiveMap();
             let i = 0;
             let j = 0;
             const {h, w, size} = this._game;
-            drawPixel(this._ctx, 0, 0, '#202020', this._canvas.width, this._canvas.height);
 
-            //отрисовка поля
+            // очистка
+            this._ctx.fillStyle = '#202020';
+            this._ctx.beginPath();
+            drawPixel(this._ctx, 0, 0, this._canvas.width, this._canvas.height);
+            this._ctx.fill();
+            this._ctx.closePath();
+
+            // отрисовка поля
+            this._ctx.fillStyle = '#fff';
+
+            this._ctx.beginPath();
             for (i = 0; i < h; i++) {
                 for (j = 0; j < w; j++) {
                     if (_map1[i][j]) {
-                        drawPixel(this._ctx, j, i, _map1[i][j] ? 'white' : '#202020', size);
+
+                        drawPixel(this._ctx, j, i, size);
                     }
                 }
             }
-            //рисуем курсор рисования 
+            this._ctx.fill();
+            this._ctx.closePath();
+
+
+            // рисуем курсор рисования
+            this._ctx.fillStyle = '#555';
+            this._ctx.beginPath();
+
             for (i = Math.floor(-(this._penSize - 1) / 2); i < 1 + Math.floor((this._penSize) / 2); i++) {
                 for (j = Math.floor(-(this._penSize - 1) / 2); j < 1 + Math.floor((this._penSize) / 2); j++) {
                     if (i + 1 + this._cursorPos.Y < 1 || i + 1 + this._cursorPos.Y > h || j + 1 + this._cursorPos.X < 1 || j + 1 + this._cursorPos.X > w)
                         continue;
-                    drawPixel(this._ctx, j + this._cursorPos.X, i + this._cursorPos.Y, _map1[i + this._cursorPos.Y][j + this._cursorPos.X] ? '#fff' : '#555', size);
+                    if (!_map1[i + this._cursorPos.Y][j + this._cursorPos.X]) {
+                        drawPixel(this._ctx, j + this._cursorPos.X, i + this._cursorPos.Y, size);
+                    }
                 }
             }
+            this._ctx.fill();
+            this._ctx.closePath();
+
         }
     }
 

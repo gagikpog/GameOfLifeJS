@@ -3,14 +3,12 @@
  * @param { CanvasRenderingContext2D } ctx контекст
  * @param { number } x позиция x
  * @param { number } y позиция y
- * @param { string } col цвет
  * @param { number } w ширина
  * @param { number | undefined } [h] высота
  */
-export function drawPixel(ctx, x, y, col, w, h) {
+export function drawPixel(ctx, x, y, w, h) {
     const height = h === void 0 ? w : h;
-    ctx.fillStyle = col;
-    ctx.fillRect(x * w, y * height, w, height);
+    ctx.rect(x * w, y * height, w, height);
 }
 
 /**
