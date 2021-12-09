@@ -1,4 +1,4 @@
-import { drawPixel } from './utils.js';
+import { drawPixel, getHash } from './utils.js';
 import { Game } from './game.js';
 export class View {
 
@@ -93,23 +93,26 @@ export class View {
             let _map1 = this._game.getActiveMap();
             let i = 0;
             let j = 0;
+            let val;
             const {h, w, size} = this._game;
             drawPixel(this._ctx, 0, 0, '#202020', this._canvas.width, this._canvas.height);
 
-            //отрисовка поля
+            // отрисовка поля
             for (i = 0; i < h; i++) {
                 for (j = 0; j < w; j++) {
-                    if (_map1[i][j]) {
-                        drawPixel(this._ctx, j, i, _map1[i][j] ? 'white' : '#202020', size);
+                    val = _map1.get(getHash(i, j));
+                    if (val) {
+                        drawPixel(this._ctx, j, i, val ? 'white' : '#202020', size);
                     }
                 }
             }
-            //рисуем курсор рисования 
+
+            // рисуем курсор рисования
             for (i = Math.floor(-(this._penSize - 1) / 2); i < 1 + Math.floor((this._penSize) / 2); i++) {
                 for (j = Math.floor(-(this._penSize - 1) / 2); j < 1 + Math.floor((this._penSize) / 2); j++) {
                     if (i + 1 + this._cursorPos.Y < 1 || i + 1 + this._cursorPos.Y > h || j + 1 + this._cursorPos.X < 1 || j + 1 + this._cursorPos.X > w)
                         continue;
-                    drawPixel(this._ctx, j + this._cursorPos.X, i + this._cursorPos.Y, _map1[i + this._cursorPos.Y][j + this._cursorPos.X] ? '#fff' : '#555', size);
+                    drawPixel(this._ctx, j + this._cursorPos.X, i + this._cursorPos.Y, _map1.get(getHash(i + this._cursorPos.Y, j + this._cursorPos.X)) ? '#fff' : '#555', size);
                 }
             }
         }
@@ -131,7 +134,7 @@ export class View {
             let _map1 = this._game.getActiveMap();
             for (let i = Math.floor(-(this._penSize - 1) / 2); i < 1 + Math.floor((this._penSize) / 2); i++) {
                 for (let j = Math.floor(-(this._penSize - 1) / 2); j < 1 + Math.floor((this._penSize) / 2); j++) {
-                    _map1[i + y][j + x] = this._editMode;
+                    _map1[getHash(i + y, j + x)] = this._editMode ? 1 : 0;
                 }
             }
             this.renderMap();

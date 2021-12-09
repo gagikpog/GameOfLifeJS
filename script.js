@@ -4,7 +4,7 @@ import { View } from './view.js';
 const m = 2;
 const cfg = {
     w: 460 * m,
-    h: 215 * m,
+    h: 216 * m,
     size: 4 / m
 };
 let start = null;

@@ -1,4 +1,4 @@
-import { CountNeighbors, createMap, randomFilling } from './utils.js';
+import { CountNeighbors, createMap, randomFilling, getHash } from './utils.js';
 
 export class Game {
 
@@ -24,16 +24,16 @@ export class Game {
     _activeMap1 = false;
 
     /**
-     * @type { number[][] }
+     * @type { Map<string, number> }
      * @private
      */
-    _map1 = [];
+    _map1 = new Map();
 
     /**
-     * @type { number[][] }
+     * @type { Map<string, number> }
      * @private
      */
-    _map2 = [];
+    _map2 = new Map();
 
     constructor(cfg) {
         this.w = cfg.w || 150;
@@ -42,15 +42,15 @@ export class Game {
         this.iteration = 0;
         this._endGame = false;
         this._activeMap1 = true;
-        this._map1 = createMap(this.w, this.h);
-        this._map2 = createMap(this.w, this.h);
+        // this._map1 = createMap(this.w, this.h);
+        // this._map2 = createMap(this.w, this.h);
     }
 
     newGame() {
         this.iteration = 0;
         this._activeMap1 = true;
         this._endGame = false;
-        randomFilling(this.getActiveMap());
+        randomFilling(this.getActiveMap(), this.w, this.h);
     }
 
     getActiveMap() {
@@ -71,11 +71,13 @@ export class Game {
         let i = 0;
         let j = 0;
         let n = 0;
+        let key = '';
         for (i = 0; i < this.h; i++) {
             for (j = 0; j < this.w; j++) {
                 n = CountNeighbors(_map1, i, j);
-                _map2[i][j] = n === 3 || (n === 2 && _map1[i][j]) ? 1 : 0;
-                if (_map2[i][j]) {
+                key = getHash(i, j);
+                _map2.set(key, n === 3 || (n === 2 && _map1.get(key)) ? 1 : 0);
+                if (_map2.get(key)) {
                     count += i * this.h + j * j;
                 }
             }
@@ -98,7 +100,7 @@ export class Game {
         let _map1 = this.getActiveMap();
         for (let i = 0; i < this.h; i++) {
             for (let j = 0; j < this.w; j++) {
-                _map1[i][j] = 0;
+                _map1[getHash(i, j)] = 0;
             }
         }
     }
